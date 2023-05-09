@@ -92,7 +92,7 @@ class BallCatch(gym.Env):
     def _get_info(self):
         return None
 
-    def reset(self, seed=None , speed = 30, engergy_transfer_persentage = 1):
+    def reset(self, seed=None , speed = 10, engergy_transfer_persentage = 1):
         """"
         speed of starting ball can be seleted by user
         energy transfer persentage is how much energy will be transfered to middle ball when hitted 
