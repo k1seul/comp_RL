@@ -31,6 +31,7 @@ for trial_num in range(9):
 
 
                 obs, reward, done, truncated, info = env.step(action)
+                print(obs)
                 print(reward)
                 sum_reward = sum_reward + reward
 

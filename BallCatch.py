@@ -26,7 +26,7 @@ class BallCatch(gym.Env):
         self.bar_length = 120
         self.bar_hight = 10 
         self.bar_y_pos = int(np.round(0.9*(self.window_size[1])))
-        self.bar_movement_interval = 30  
+        self.bar_movement_interval = 10  
 
         self.bar_starting_x_pos = int(np.round(self.window_size[0] * 0.5))
 
@@ -77,15 +77,19 @@ class BallCatch(gym.Env):
 
     def _get_obs(self):
 
+        length = np.linalg.norm(self.window_size)
     
-        obs = {"ball_start": self._ball_middle_location,
-                    "ball_middle": self._ball_middle_location,
-                    "bar_location": np.array(self.bar_location).reshape([1,])}
+        obs = {"ball_start": self._ball_start_location/length,
+                    "ball_middle": self._ball_middle_location/length,
+                    "bar_location": np.array(self.bar_location/float(self.window_size[0])).reshape([1,])}
+        
+
         
         if self.obs_frame_n > 1:
             self.obs_frame_memory.append(obs) 
 
         obs_array = np.concatenate([obs[key] for key in obs.keys()])
+
 
         return obs_array
 
@@ -103,7 +107,9 @@ class BallCatch(gym.Env):
         self.step_count = 1 
         self.energy_transfer_persentage = engergy_transfer_persentage
 
-        start_ball_rand_pos = self.np_random.integers(self.ball_size, self.window_size[0] - self.ball_size, size=1,dtype=int)
+        start_ball_rand_pos = int(self.window_size[0]/2)
+
+        ## start_ball_rand_pos = self.np_random.integers(self.ball_size, self.window_size[0] - self.ball_size, size=1,dtype=int)
         middle_ball_rand_pos = self.np_random.integers(self.ball_size, self.window_size[0] - self.ball_size, size=1,dtype=int)
         
         

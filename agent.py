@@ -29,7 +29,7 @@ class Agent():
         self.gamma = gamma 
         self.epsilon = 1.0 
         self.epsilon_min = 0.01 
-        self.epsilon_decay_rate = 0.99995 
+        self.epsilon_decay_rate = 0.9995 
 
         # exeprience memory for the batch learning (batch is randomly sampled from the memory)
         self.experience_memory = deque(maxlen=self.memory_size)
