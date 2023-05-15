@@ -22,10 +22,10 @@ def agent_train():
     state_size = env.state_n
     action_size = env.action_n
 
-    hidden_size = 512
+    hidden_size = 256
     learning_rate = 0.001 
     memory_size = 10000 
-    batch_size = 64 
+    batch_size = 64
     gamma = 0.99 
 
     agent = Agent(state_size=state_size, action_size=action_size,
@@ -57,6 +57,7 @@ def agent_train():
             agent.remember(state, action, reward, next_state, done)
 
             state = next_state
+            agent.replay()
 
         
         if done:
