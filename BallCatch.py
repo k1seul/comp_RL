@@ -23,7 +23,7 @@ class BallCatch(gym.Env):
 
 
 
-        self.bar_length = 200
+        self.bar_length = 150
         self.bar_hight = 10 
         self.bar_y_pos = int(np.round(0.9*(self.window_size[1])))
         self.bar_movement_interval = 20  
@@ -110,11 +110,9 @@ class BallCatch(gym.Env):
         self.step_count = 1 
         self.energy_transfer_persentage = engergy_transfer_persentage
 
-        start_ball_rand_pos = int(self.window_size[0]/2)
-        middle_ball_rand_pos = int(self.window_size[0]/3)
 
-        ## start_ball_rand_pos = self.np_random.integers(self.ball_size, self.window_size[0] - self.ball_size, size=1,dtype=int)
-        ## middle_ball_rand_pos = self.np_random.integers(self.ball_size, self.window_size[0] - self.ball_size, size=1,dtype=int)
+        start_ball_rand_pos = self.np_random.integers(self.ball_size, self.window_size[0] - self.ball_size, size=1,dtype=int)
+        middle_ball_rand_pos = self.np_random.integers(self.ball_size, self.window_size[0] - self.ball_size, size=1,dtype=int)
         
         
 
@@ -170,9 +168,10 @@ class BallCatch(gym.Env):
             self.move_ball()
             self.bar_location = max(self.bar_length/2, min(self.bar_location+direction, int(self.window_size[0]) - self.bar_length/2)) 
 
-            difference = abs(float(self.bar_location) - float(self._ball_middle_location[0])) / float(self.window_size[0])
-            difference = round(abs(difference),2)
-            reward = -self.reward_size*difference
+            ##difference = abs(float(self.bar_location) - float(self._ball_middle_location[0])) / float(self.window_size[0])
+            ##difference = round(abs(difference),2)
+            ## reward = -self.reward_size*difference
+            reward = 0 
 
         observation = self._get_obs()
         info = self._get_info()
