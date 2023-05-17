@@ -16,7 +16,7 @@ main policy network is simple linear DQN and model_network does only one step pr
 # composed of 5 linear layer with selected hidden_size 
 # forward method used relu as activation function
 
-Network_names = ["QNetwork", "LSTM_Q", "Model_Network_valila", "Model_Network_cross"]
+Network_names = ["QNetwork", "LSTM_Q", "Model_Network_vanilla", "Model_Network_cross"]
 
 class QNetwork(nn.Module):
     ## input dimension of each state, action, hidden. if the Q_Network is passed though the output of model, model_output_n need to be determined 
@@ -88,12 +88,12 @@ class LSTM_Q(nn.Module):
 
     
 
-# Model network is network chich inputs state, action and guesses next_state and reward
+# Model network is network which inputs state, action and guesses next_state and reward
 # if done_guess=True, it also guesses if the agent is in terminal state or not
 
-class Model_Network_valila(nn.Module):
+class Model_Network_vanilla(nn.Module):
     def __init__(self, state_dim, output_dim, hidden_dim):
-        super(Model_Network_valila, self).__init__()
+        super(Model_Network_vanilla, self).__init__()
         self.state_dim = state_dim
 
         self.fc1 = nn.Linear(state_dim , hidden_dim)
