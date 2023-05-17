@@ -74,5 +74,5 @@ def agent_train():
     env.close()
     writer.close()  
 
-
-agent_train() 
+if __name__ == "__main__":
+    agent_train() 
