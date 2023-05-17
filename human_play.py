@@ -9,10 +9,7 @@ player_move_time = 0
 player_move_delay = 500 # milliseconds
 
 for episode_num in range(1,10):
-
-
     
-
     state, info = env.reset()
     terminated = False
     truncated = False 
