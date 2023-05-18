@@ -2,7 +2,7 @@ from BallCatch import BallCatch
 import pygame
 
 
-env = BallCatch(render_mode='human')
+env = BallCatch(render_mode='human', obs_frame=2)
 
 # Set up the player move timer
 player_move_time = 0

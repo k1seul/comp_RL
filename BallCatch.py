@@ -13,7 +13,7 @@ class BallCatch(gym.Env):
     """
     metadata = {"render_modes" : ["human", "rgb_array"], "render_fps": 30}
 
-    def __init__(self, render_mode=None):
+    def __init__(self, render_mode=None, obs_frame=1):
         self.window_size = [600 , 800] ## game window size 
         self.ball_size = 20
 
@@ -35,17 +35,19 @@ class BallCatch(gym.Env):
 
         
         ## for multiple frame as obs 
-        self.obs_frame_n = 1
+        self.obs_frame_n = obs_frame
         self.obs_frame_interval = 5
         self.step_count = 1 
         self.max_step = 200
+        self.state_n = 5
+        self.action_n = 3
 
         if self.obs_frame_n > 1:
             self.obs_frame_memory = deque(maxlen=100)
             for i in range(1,101):
-                self.obs_frame_memory.append({"ball_start": np.array([0,0]),
-                                              "ball_middle": np.array([0,0]),
-                                              "bar_location": 0})
+                self.obs_frame_memory.append(np.zeros(self.state_n))
+
+            self.state_n = obs_frame*self.state_n
 
 
 
@@ -59,8 +61,7 @@ class BallCatch(gym.Env):
         # three action 0:stop 1:left 2:right 
         self.action_space = spaces.Discrete(3)
 
-        self.state_n = 5
-        self.action_n = 3
+        
 
         self._action_to_direction = { 
             0: np.array([0]),
@@ -90,6 +91,12 @@ class BallCatch(gym.Env):
         
         if self.obs_frame_n > 1:
             self.obs_frame_memory.append(obs_array) 
+            frame_index = [a*(-self.obs_frame_interval)-1 for a in range(self.obs_frame_n)]
+
+            obs_array = np.concatenate([self.obs_frame_memory[i] for i in frame_index])
+            print(obs_array)
+
+            
 
         
 
