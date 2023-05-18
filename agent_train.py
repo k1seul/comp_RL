@@ -6,10 +6,11 @@ from agent import Agent
 from torch.utils.tensorboard import SummaryWriter 
 
 
-def agent_train():
+def agent_train(model_based = False):
     game_name = "BallCatch"
     run_time = time.strftime('%m_%d_%H_%M_%S', time.localtime(time.time()))
     log_dir = os.path.join(os.path.join(os.path.expanduser('~')), 'Desktop/tensorboard_Data')
+    print("model based is ", model_based)
 
     port = 6006 
 
@@ -17,7 +18,7 @@ def agent_train():
 
     log_dir = log_dir + '/' + game_name + '_' + str(run_time)
 
-    env = BallCatch()
+    env = BallCatch(obs_frame=1)
 
     state_size = env.state_n
     action_size = env.action_n
@@ -31,14 +32,16 @@ def agent_train():
     agent = Agent(state_size=state_size, action_size=action_size,
                   hidden_size=hidden_size, learning_rate=learning_rate,
                   memory_size=memory_size, batch_size=batch_size,
-                  gamma=gamma)
+                  gamma=gamma, 
+                  model_based=model_based)
+    print(model_based)
     
 
     # Set up TensorBoard output
     writer = SummaryWriter(log_dir=log_dir)
 
 
-    num_episode = 1000
+    num_episode = 5000
 
     for i_episode in range(num_episode):
         state, info = env.reset()
@@ -74,5 +77,5 @@ def agent_train():
     env.close()
     writer.close()  
 
-if __name__ == "__main__":
-    agent_train() 
+
+agent_train(model_based = True) 

@@ -58,18 +58,18 @@ class Agent():
             self.model_epsilon = 1.0 
             self.model_epsilon_min = 0.01 
             self.model_epsilon_decay_rate = 0.9995
-            self.model_optimizer = optim.Adam(self.model_network.parameters, lr=self.learning_rate)
+            self.model_optimizer = optim.Adam(self.model_network.parameters() , lr=self.learning_rate)
             self.model_criterion = nn.MSELoss()  
             self.model_train_n = 0 
-            self.model_train_min_for_simul = 1000
+            self.model_train_min_for_simul = 100
             self.model_max_simulation_n = 50 
             self.model_loss = 100 
             self.model_loss_bound = 0.1 
 
 
 
-    def act(self, state, max_q_action= True): 
-        if self.model_based and np.random.rand() <= 0.05:
+    def act(self, state, max_q_action= True, model_acting=False): 
+        if self.model_based and np.random.rand() <= 0.05 and not(model_acting):
             self.model_simulate(state, 10)
         if np.random.rand() <= self.epsilon:
             return np.random.randint(self.action_size) 
@@ -86,6 +86,9 @@ class Agent():
     
     def remember(self, state, action, reward, next_state, done):
         self.experience_memory.append((state, action, reward, next_state, done))
+    def model_simulation_remember(self, state, action, reward, next_state, done):
+        self.model_experience_memory.append((state, action, reward, next_state, done))
+
         
 
     def replay(self, uniformed_sample = True, TD_sample = False): 
@@ -143,7 +146,7 @@ class Agent():
                 if simul_n >= self.model_max_simulation_n:
                     done = True 
 
-                action = self.act(state)
+                action = self.act(state, model_acting=True)
 
                 action = np.array([action])
             
