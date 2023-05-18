@@ -22,9 +22,8 @@ class BallCatch(gym.Env):
 
 
 
-
         self.bar_length = 150
-        self.bar_hight = 10 
+        self.bar_height = 10 
         self.bar_y_pos = int(np.round(0.9*(self.window_size[1])))
         self.bar_movement_interval = 20  
 
@@ -96,12 +95,8 @@ class BallCatch(gym.Env):
             obs_array = np.concatenate([self.obs_frame_memory[i] for i in frame_index])
             print(obs_array)
 
-            
-
-        
-
-
         return obs_array
+
 
     def _get_info(self):
         return None
@@ -257,7 +252,7 @@ class BallCatch(gym.Env):
             (255,0,0),
             pygame.Rect(
             ( int(self.bar_location - 1/2*self.bar_length), self.bar_y_pos ),
-            (self.bar_length, self.bar_hight)
+            (self.bar_length, self.bar_height)
             ),
         )
 
