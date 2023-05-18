@@ -53,7 +53,7 @@ class Agent():
         if model_based:
             """ model is esitimation of the env, 
             simple model just calculates estimate s(t+1), r(t+1) output if given input of s(t), a(t) """
-            self.model_network = Model_Network_vanilla(self.state_size+1, self.state_size+1, self.hidden_size)
+            self.model_network = Model_Network_vanilla(self.state_size+1, self.state_size+1, self.hidden_size).to(self.device)
             self.model_gamma = gamma 
             self.model_epsilon = 1.0 
             self.model_epsilon_min = 0.01 
