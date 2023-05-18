@@ -38,7 +38,7 @@ def agent_train():
     writer = SummaryWriter(log_dir=log_dir)
 
 
-    num_episode = 1000
+    num_episode = 10000 
 
     for i_episode in range(num_episode):
         state, info = env.reset()
